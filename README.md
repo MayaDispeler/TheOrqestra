@@ -146,9 +146,4 @@ Same command. Run it again when new agents are released.
 Built by **Srihari Venkatesan** · [linkedin.com/in/sriharivvenkatesan](https://linkedin.com/in/sriharivvenkatesan) · [iamsrihari.com](https://www.iamsrihari.com)
 
 *There are things in this swarm we have not documented yet. Install it and find out.*
-
-```bash
-npx quorum-ai
-```
-
 </div>
