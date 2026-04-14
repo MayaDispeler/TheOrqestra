@@ -1,15 +1,29 @@
 {
   "name": "orqestra-ai",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "97 specialist Claude Code agents that self-assemble into a team for any task",
   "bin": {
-    "orqestra-ai": "./install.js"
+    "orqestra-ai": "install.js"
   },
-  "keywords": ["claude", "claude-code", "agents", "ai", "revops", "engineering", "orchestrator"],
+  "files": [
+    "agents/",
+    "skills/",
+    "install.js",
+    "orqestra-logo.svg"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "agents",
+    "ai",
+    "revops",
+    "engineering",
+    "orchestrator"
+  ],
   "author": "Srihari Venkatesan",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MayaDispeler/orqestra.git"
+    "url": "git+https://github.com/MayaDispeler/orqestra.git"
   }
 }
