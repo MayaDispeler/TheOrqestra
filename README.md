@@ -4,10 +4,10 @@
 
 *Your personal cabinet of specialists. Assembled on demand.*
 
-[![npm](https://img.shields.io/npm/v/the-cabinet?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/the-cabinet)
+[![npm](https://img.shields.io/npm/v/cabinet-ai?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/cabinet-ai)
 [![license](https://img.shields.io/badge/license-MIT-%23000?labelColor=%23000&style=flat-square)](LICENSE)
 [![built for](https://img.shields.io/badge/built%20for-Claude%20Code-%23000?labelColor=%23000&style=flat-square)](https://claude.ai/code)
-[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/the-cabinet?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/the-cabinet/stargazers)
+[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/cabinet-ai?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/cabinet-ai/stargazers)
 
 ![The Cabinet in action](cabinet-demo.gif)
 
@@ -16,7 +16,7 @@
 97 specialist agents. 101 skills. One orchestrator that assembles the right team before anyone writes a line of code.
 
 ```bash
-npx the-cabinet
+npx cabinet-ai
 ```
 
 ⭐ Star this repo to get notified when new members join the Cabinet.
@@ -105,7 +105,7 @@ An agent planning system that audits itself is not a prompt. It is an opinion ab
 ## Install
 
 ```bash
-npx the-cabinet
+npx cabinet-ai
 ```
 
 Installs to `~/.claude/` globally. Every project you open in Claude Code has access immediately. No config. No API keys. No settings files. Requirements: Claude Code · Node.js 18+
@@ -127,7 +127,7 @@ Every agent lives at `~/.claude/agents/`. Every skill lives at `~/.claude/skills
 ## Update
 
 ```bash
-npx the-cabinet
+npx cabinet-ai
 ```
 
 Same command. Run it again when new agents are released.
@@ -141,7 +141,7 @@ Built by **Srihari Venkatesan** · [LinkedIn](https://www.linkedin.com/in/srihar
 *There are things in this swarm we have not documented yet. Install it and find out.*
 
 ```bash
-npx the-cabinet
+npx cabinet-ai
 ```
 
 </div>
