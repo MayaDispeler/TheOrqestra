@@ -1,4 +1,4 @@
-# Contributing to Quorum
+# Contributing to Orqestra
 
 Adding a new agent takes 10 minutes. You do not need to be a developer.
 
