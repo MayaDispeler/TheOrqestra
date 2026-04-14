@@ -1,25 +1,25 @@
 <div align="center">
 
-<img src="cabinet-logo.svg" alt="The Cabinet" width="680"/>
+<img src="orqestra-logo.svg" alt="The orqestra" width="680"/>
 
-*Your personal cabinet of specialists. Assembled on demand.*
+*Your personal orqestra of specialists. Assembled on demand.*
 
-[![npm](https://img.shields.io/npm/v/cabinet-ai?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/cabinet-ai)
+[![npm](https://img.shields.io/npm/v/orqestra-ai?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/orqestra-ai)
 [![license](https://img.shields.io/badge/license-MIT-%23000?labelColor=%23000&style=flat-square)](LICENSE)
 [![built for](https://img.shields.io/badge/built%20for-Claude%20Code-%23000?labelColor=%23000&style=flat-square)](https://claude.ai/code)
-[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/cabinet-ai?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/cabinet-ai/stargazers)
+[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/orqestra-ai?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/orqestra-ai/stargazers)
 
-![The Cabinet in action](cabinet-demo.gif)
+![The orqestra in action](orqestra-demo.gif)
 
 </div>
 
 97 specialist agents. 101 skills. One orchestrator that assembles the right team before anyone writes a line of code.
 
 ```bash
-npx cabinet-ai
+npx orqestra-ai
 ```
 
-⭐ Star this repo to get notified when new members join the Cabinet.
+⭐ Star this repo to get notified when new members join the orqestra.
 
 ---
 
@@ -27,7 +27,7 @@ npx cabinet-ai
 
 You have Claude Code. You have agents. You use them. But every session starts the same way, you describe what you want, Claude responds helpfully, something gets built. Whether it gets built by the right agent, in the right order, with the right context passed between steps: that part is left entirely to you.
 
-That is not a Claude problem. That is a coordination problem. The Cabinet solves coordination.
+That is not a Claude problem. That is a coordination problem. The orqestra solves coordination.
 
 ---
 
@@ -105,7 +105,7 @@ An agent planning system that audits itself is not a prompt. It is an opinion ab
 ## Install
 
 ```bash
-npx cabinet-ai
+npx orqestra-ai
 ```
 
 Installs to `~/.claude/` globally. Every project you open in Claude Code has access immediately. No config. No API keys. No settings files. Requirements: Claude Code · Node.js 18+
@@ -127,7 +127,7 @@ Every agent lives at `~/.claude/agents/`. Every skill lives at `~/.claude/skills
 ## Update
 
 ```bash
-npx cabinet-ai
+npx orqestra-ai
 ```
 
 Same command. Run it again when new agents are released.
@@ -141,7 +141,7 @@ Built by **Srihari Venkatesan** · [LinkedIn](https://www.linkedin.com/in/srihar
 *There are things in this swarm we have not documented yet. Install it and find out.*
 
 ```bash
-npx cabinet-ai
+npx orqestra-ai
 ```
 
 </div>
