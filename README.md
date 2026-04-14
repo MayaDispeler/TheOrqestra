@@ -7,7 +7,8 @@
 [![npm](https://img.shields.io/npm/v/orqestra-ai?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/orqestra-ai)
 [![license](https://img.shields.io/badge/license-MIT-%23000?labelColor=%23000&style=flat-square)](LICENSE)
 [![built for](https://img.shields.io/badge/built%20for-Claude%20Code-%23000?labelColor=%23000&style=flat-square)](https://claude.ai/code)
-[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/orqestra-ai?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/orqestra-ai/stargazers)
+[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/orqestra-ai?style=flat-square&color=000&labelColor=000)]
+(https://github.com/sriharivvenkatesan/orqestra-ai/stargazers)
 
 ![The orqestra in action](orqestra-demo.gif)
 
