@@ -140,8 +140,4 @@ Built by **Srihari Venkatesan** · [LinkedIn](https://www.linkedin.com/in/srihar
 
 *There are things in this swarm we have not documented yet. Install it and find out.*
 
-```bash
-npx orqestra-ai
-```
-
 </div>
