@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 
@@ -8,7 +7,12 @@ const localTarget = path.join(process.cwd(), '.claude');
 const src = path.dirname(require.main.filename);
 
 function copyDir(from, to) {
-  if (!fs.existsSync(from)) return;
+  if (!fs.existsSync(from)) {
+    console.error('ERROR: source folder not found: ' + from);
+    console.error('This means agents/ and skills/ were excluded from the npm package.');
+    console.error('Check your .npmignore file.');
+    return;
+  }
   if (!fs.existsSync(to)) fs.mkdirSync(to, { recursive: true });
   fs.readdirSync(from).forEach(file => {
     const srcPath = path.join(from, file);
@@ -24,20 +28,15 @@ function copyDir(from, to) {
 copyDir(path.join(src, 'agents'), path.join(globalTarget, 'agents'));
 copyDir(path.join(src, 'skills'), path.join(globalTarget, 'skills'));
 
-if (fs.existsSync(localTarget)) {
-  copyDir(path.join(src, 'agents'), path.join(localTarget, 'agents'));
-  copyDir(path.join(src, 'skills'), path.join(localTarget, 'skills'));
-}
+copyDir(path.join(src, 'agents'), path.join(localTarget, 'agents'));
+copyDir(path.join(src, 'skills'), path.join(localTarget, 'skills'));
 
 const claudeMdPath = path.join(process.cwd(), 'CLAUDE.md');
 const swarmNotice = `
 ## Orqestra Agent Swarm
-
 This project has 97 specialist Claude Code agents and 101 skill files installed.
-
 Describe what you want to build.
 The orchestrator activates automatically and assembles the right team.
-
 Or type @orchestrator followed by your task.
 `;
 
