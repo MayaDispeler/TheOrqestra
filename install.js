@@ -31,7 +31,7 @@ if (fs.existsSync(localTarget)) {
 
 const claudeMdPath = path.join(process.cwd(), 'CLAUDE.md');
 const swarmNotice = `
-## Locust Agent Swarm
+## Orqestra Agent Swarm
 
 This project has 97 specialist Claude Code agents and 101 skill files installed.
 
@@ -43,7 +43,7 @@ Or type @orchestrator followed by your task.
 
 if (fs.existsSync(claudeMdPath)) {
   const existing = fs.readFileSync(claudeMdPath, 'utf8');
-  if (!existing.includes('Locust Agent Swarm')) {
+  if (!existing.includes('Orqestra Agent Swarm')) {
     fs.appendFileSync(claudeMdPath, swarmNotice);
   }
 } else {
@@ -56,7 +56,7 @@ const skillCount = fs.existsSync(path.join(src, 'skills'))
   ? fs.readdirSync(path.join(src, 'skills')).length : 0;
 
 console.log('');
-console.log('Locust installed successfully');
+console.log('Orqestra installed successfully');
 console.log(agentCount + ' agents  ->  ~/.claude/agents/');
 console.log(skillCount + ' skills  ->  ~/.claude/skills/');
 console.log('');
