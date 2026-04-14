@@ -1,176 +1,111 @@
 <div align="center">
 
 ```
-██████╗ ██╗   ██╗ ██████╗ ██████╗ ██╗   ██╗███╗   ███╗
-██╔═══██╗██║   ██║██╔═══██╗██╔══██╗██║   ██║████╗ ████║
-██║   ██║██║   ██║██║   ██║██████╔╝██║   ██║██╔████╔██║
-██║▄▄ ██║██║   ██║██║   ██║██╔══██╗██║   ██║██║╚██╔╝██║
-╚██████╔╝╚██████╔╝╚██████╔╝██║  ██║╚██████╔╝██║ ╚═╝ ██║
- ╚══▀▀═╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝
+  ██████╗ ██╗   ██╗ ██████╗ ██████╗ ██╗   ██╗███╗   ███╗
+ ██╔═══██╗██║   ██║██╔═══██╗██╔══██╗██║   ██║████╗ ████║
+ ██║   ██║██║   ██║██║   ██║██████╔╝██║   ██║██╔████╔██║
+ ██║▄▄ ██║██║   ██║██║   ██║██╔══██╗██║   ██║██║╚██╔╝██║
+ ╚██████╔╝╚██████╔╝╚██████╔╝██║  ██║╚██████╔╝██║ ╚═╝ ██║
+  ╚══▀▀═╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝
 ```
 
 *Claude is brilliant. It just doesn't know who to call.*
 
-[![npm](https://img.shields.io/npm/v/quorum-ai?color=%23000\&labelColor=%23000\&style=flat-square)](https://npmjs.com/package/quorum-ai)
-[![license](https://img.shields.io/badge/license-MIT-%23000?labelColor=%23000\&style=flat-square)](#)
-[![built for](https://img.shields.io/badge/built%20for-Claude%20Code-%23000?labelColor=%23000\&style=flat-square)](https://claude.ai/code)
-[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/Quorum?style=flat-square\&color=000\&labelColor=000)](https://github.com/sriharivvenkatesan/Quorum/stargazers)
+[![npm](https://img.shields.io/npm/v/quorum-ai?color=%23000&labelColor=%23000&style=flat-square)](https://npmjs.com/package/quorum-ai)
+[![license](https://img.shields.io/badge/license-MIT-%23000?labelColor=%23000&style=flat-square)](#)
+[![built for](https://img.shields.io/badge/built%20for-Claude%20Code-%23000?labelColor=%23000&style=flat-square)](https://claude.ai/code)
+[![Stars](https://img.shields.io/github/stars/sriharivvenkatesan/Quorum?style=flat-square&color=000&labelColor=000)](https://github.com/sriharivvenkatesan/Quorum/stargazers)
 
 ![Quorum in action](quorum-demo.gif)
 
 </div>
 
----
-
-## Overview
-
-**97 specialist agents. 101 skills. One orchestrator.**
-
-It assembles the right team *before* anyone writes a line of code.
+97 specialist agents. 101 skills. One orchestrator that assembles the right team before anyone writes a line of code.
 
 ```bash
 npx quorum-ai
 ```
 
-⭐ Star the repo to get notified when new agents drop.
+⭐ Star this repo to get notified when new agents drop.
 
 ---
 
-## The Problem Nobody Talks About
+## The problem nobody talks about
 
-You have Claude Code. You have agents. You use them.
+You have Claude Code. You have agents. You use them. But every session starts the same way — you describe what you want, Claude responds helpfully, something gets built. Whether it gets built by the right agent, in the right order, with the right context passed between steps: that part is left entirely to you.
 
-But every session starts the same:
-
-* You describe what you want
-* Claude responds
-* Something gets built
-
-What’s missing?
-
-* The *right agent*
-* The *right order*
-* The *right context flow*
-
-That’s not a Claude problem.
-That’s a **coordination problem**.
-
-**Quorum solves coordination.**
+That is not a Claude problem. That is a coordination problem. Quorum solves coordination.
 
 ---
 
-## What Happens When You Type a Task
+## What happens when you type a task
 
 ```
-you: "build a SaaS for managing freelance invoices"
+─────────────────────────────────────────────────────────
+  you:  "build a SaaS for managing freelance invoices"
+─────────────────────────────────────────────────────────
+  ORCHESTRATOR
 
-ORCHESTRATOR
+  Pass 1 — which domains does this touch?
+    engineering   ✓   API, database, auth, billing logic
+    design        ✓   invoice UI, dashboard, empty states
+    data          ✓   revenue metrics, invoice analytics
+    revops        ✗   no GTM work stated
+    people        ✗   no hiring or legal work stated
 
-Pass 1 — domains:
-  engineering ✓
-  design      ✓
-  data        ✓
-  revops      ✗
-  people      ✗
-  docs        ✗
+  Pass 2 — which agents, in what order?
+    STAGE 1   system-architect      ← nothing starts without this
+    STAGE 2   api-designer          ← parallel
+              ux-designer           ← parallel, both wait for stage 1
+    STAGE 3   backend-engineer      ← parallel
+              frontend-engineer     ← parallel, both wait for stage 2
+    STAGE 4   data-analyst          ← waits for stage 3
+    STAGE 5   qa-engineer           ← final gate
 
-Pass 2 — execution plan:
-
-  STAGE 1   system-architect
-  STAGE 2   api-designer      (parallel)
-            ux-designer
-  STAGE 3   backend-engineer  (parallel)
-            frontend-engineer
-  STAGE 4   data-analyst
-  STAGE 5   qa-engineer
+  every agent receives the output of the previous stage
+  every agent knows exactly what to hand off to the next
+─────────────────────────────────────────────────────────
+  start with @system-architect
+─────────────────────────────────────────────────────────
 ```
 
-* Each agent receives prior outputs
-* Each agent knows what to hand off
-
-If your prompt is vague → it asks **3 questions and stops**
-
-**No guessing. No wasted work. No chaos.**
+The orchestrator filters by domain cluster first, then selects from a hardcoded registry — it cannot hallucinate agent names. Every pick requires a written justification. If your prompt is too vague to plan against, it asks three questions and stops. No assumptions. No phantom agents. No work done in the wrong order.
 
 ---
 
-## The Roster
+## The roster
 
-### Engineering
+Every agent was built by making Claude inhabit the role first — answer as a 15-year veteran, push back on bad decisions, name the mistakes juniors always make — then crystallising that into an agent file. Not a prompt. A perspective.
 
-`software-engineer` `frontend-engineer` `backend-engineer` `full-stack-engineer`
-`mobile-developer` `system-architect` `cloud-architect` `saas-architect`
-`solution-architect` `staff-engineer` `ai-engineer` `ml-engineer`
-`mlops-engineer` `data-engineer` `devops-engineer` `devsecops-engineer`
-`platform-engineer` `sre` `security-engineer` `penetration-tester`
-`kubernetes-engineer` `aws-engineer` `azure-engineer` `gcp-engineer`
-`database-administrator` `api-designer` `rag-engineer` `prompt-engineer`
-`qa-engineer` `debugger` `code-reviewer` `+more`
+**Engineering** — `software-engineer` `frontend-engineer` `backend-engineer` `full-stack-engineer` `mobile-developer` `system-architect` `cloud-architect` `saas-architect` `solution-architect` `staff-engineer` `ai-engineer` `ml-engineer` `mlops-engineer` `data-engineer` `devops-engineer` `devsecops-engineer` `platform-engineer` `sre` `security-engineer` `penetration-tester` `kubernetes-engineer` `aws-engineer` `azure-engineer` `gcp-engineer` `embedded-systems-engineer` `database-administrator` `api-designer` `rag-engineer` `prompt-engineer` `ai-safety-engineer` `code-reviewer` `debugger` `qa-engineer` `+more`
 
-### Design
+**Design** — `ux-designer` `ui-expert` `design-engineer` `ux-researcher` `ux-writer`
 
-`ux-designer` `ui-expert` `design-engineer` `ux-researcher` `ux-writer`
+**Data** — `data-analyst` `business-analyst` `bi-specialist` `ml-analyst` `analytics-engineer`
 
-### Data
+**Business and RevOps** — `product-manager` `revops-strategist` `gtm-expert` `strategy-expert` `sales-ops-analyst` `marketing-ops-analyst` `crm-specialist` `customer-success-manager` `account-executive` `competitive-intelligence` `content-strategist` `ai-product-manager` `+more`
 
-`data-analyst` `business-analyst` `bi-specialist` `ml-analyst` `analytics-engineer`
+**Executive** — `ceo` `cfo` `cmo` `coo` `cpo` `cro` `cto` `ciso` `vp-engineering` `vp-sales` `founder`
 
-### Business & RevOps
+**People, Legal, Ops** — `hr` `talent-acquisition` `talent-retention` `legal` `compliance-officer` `procurement` `it-admin`
 
-`product-manager` `revops-strategist` `gtm-expert` `strategy-expert`
-`sales-ops-analyst` `marketing-ops-analyst` `crm-specialist`
-`customer-success-manager` `account-executive`
-`competitive-intelligence` `content-strategist` `ai-product-manager`
-
-### Executive
-
-`ceo` `cfo` `cmo` `coo` `cpo` `cro` `cto` `ciso` `vp-engineering` `vp-sales`
-
-### People, Legal, Ops
-
-`hr` `talent-acquisition` `talent-retention`
-`legal` `compliance-officer` `procurement` `it-admin`
-
-### Core
-
-`orchestrator`
+**The one that runs first** — `orchestrator`
 
 ---
 
-## 101 Skills (Auto-Loaded Intelligence)
+## 101 skills that know when to show up
 
-Skills are not tools. They are **expert reference systems**.
+Skills are dense reference files — written the way a senior expert would write a reference for themselves. They load automatically when an agent needs them. You do not configure them. You do not call them. When `backend-engineer` is working on your API, `api-design-patterns`, `database-design`, `error-handling-patterns`, and `security-best-practices` are already there.
 
-You don’t call them — they activate automatically.
-
-Example:
-
-* backend work → `api-design-patterns`, `database-design`, `security-best-practices`
-
-Sample skills:
-`saas-architecture` `zero-trust-architecture` `rag-advanced-patterns`
-`llm-integration-patterns` `agent-design-patterns`
-`vector-database-patterns` `event-driven-architecture`
-`kubernetes-patterns` `gitops-patterns` `observability-patterns`
-`incident-management` `sre-practices` `devsecops`
-`finance-modeling` `okr-framework` `gtm-playbook`
-
-(+ 78 more)
+A partial list: `saas-architecture` `zero-trust-architecture` `rag-advanced-patterns` `llm-integration-patterns` `agent-design-patterns` `ai-safety-guardrails` `vector-database-patterns` `multimodal-ai-patterns` `event-driven-architecture` `service-mesh-patterns` `kubernetes-patterns` `terraform-patterns` `gitops-patterns` `observability-patterns` `incident-management` `sre-practices` `devsecops` `feature-flags-patterns` `cost-engineering` `finance-modeling` `executive-frameworks` `okr-framework` `gtm-playbook` — and 78 more.
 
 ---
 
-## What the Orchestrator Learned
+## What the orchestrator learned from testing
 
-During testing, it found its own bugs:
+Before this shipped, the orchestrator was tested against real tasks and told to find its own bugs. It found three. Two agents existed in the folder but were missing from the registry — Pass 2 could never select them. It found them, named them, fixed its own registry. A broken critical path reference pointed to a stage that did not exist. It found that too.
 
-* Missing agents in registry
-* Broken execution path
-* Invalid stage references
-
-And fixed them.
-
-**This is not a prompt.
-It’s an opinion about how software should be built.**
+An agent planning system that audits itself is not a prompt. It is an opinion about how software should be built.
 
 ---
 
@@ -180,30 +115,19 @@ It’s an opinion about how software should be built.**
 npx quorum-ai
 ```
 
-* Installs globally → `~/.claude/`
-* Works instantly in all projects
-* No config, no API keys
-
-**Requirements:** Claude Code · Node.js 18+
+Installs to `~/.claude/` globally. Every project you open in Claude Code has access immediately. No config. No API keys. No settings files. Requirements: Claude Code · Node.js 18+
 
 ---
 
 ## Contributing
 
-Adding an agent takes ~10 minutes.
-
-* Read `CONTRIBUTING.md`
-* Open issue: `[Agent Request] role-name`
+Adding an agent takes 10 minutes and requires no coding. Read [CONTRIBUTING.md](CONTRIBUTING.md) to get started. Want a role that does not exist yet? Open an issue titled `[Agent Request] role-name` — the community builds it.
 
 ---
 
-## Extend It
+## Extend it
 
-* Agents → `~/.claude/agents/`
-* Skills → `~/.claude/skills/`
-
-After adding an agent:
-→ register it in `orchestrator.md`
+Every agent lives at `~/.claude/agents/`. Every skill lives at `~/.claude/skills/`. Open any file, read it, edit it. After adding a new agent, add the name to the cluster registry inside `~/.claude/agents/orchestrator.md` so it becomes selectable.
 
 ---
 
@@ -213,19 +137,15 @@ After adding an agent:
 npx quorum-ai
 ```
 
+Same command. Run it again when new agents are released.
+
 ---
 
 <div align="center">
 
-**Built by Srihari Venkatesan**
+Built by **Srihari Venkatesan** · [linkedin.com/in/sriharivvenkatesan](https://linkedin.com/in/sriharivvenkatesan) · [iamsrihari.com](https://www.iamsrihari.com)
 
-[LinkedIn](https://linkedin.com/in/sriharivvenkatesan) · [Website](https://www.iamsrihari.com)
-
----
-
-*There are things in this swarm we have not documented yet.*
-
-*Install it and find out.*
+*There are things in this swarm we have not documented yet. Install it and find out.*
 
 ```bash
 npx quorum-ai
