@@ -1,0 +1,15 @@
+{
+  "name": "quorum-ai",
+  "version": "1.0.0",
+  "description": "97 specialist Claude Code agents that self-assemble into a team for any task",
+  "bin": {
+    "quorum-ai": "./install.js"
+  },
+  "keywords": ["claude", "claude-code", "agents", "ai", "revops", "engineering", "orchestrator"],
+  "author": "Srihari Venkatesan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MayaDispeler/Quorum.git"
+  }
+}

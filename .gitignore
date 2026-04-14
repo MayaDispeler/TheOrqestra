@@ -1,0 +1,6 @@
+.claude
+.claude/settings.local.json
+.claude/settings.json
+node_modules/
+.DS_Store
+*.log
