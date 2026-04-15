@@ -166,11 +166,11 @@ Skills appear only once, at the earliest stage where they activate.
 
 ### STEP 5 — SAVE THE PLAN FILE
 
-After showing all terminal output, I instruct Claude Code to save a file called `ORQESTRA_PLAN.md` in the current project root. The file contains these seven sections in clean markdown, readable by a non-technical director:
+After showing all terminal output, I instruct Claude Code to save a file called `ORQESTRA_PLAN.html` in the current project root. This is a beautifully designed, single-file HTML document that matches the Orqestra visual identity. It must be self-contained (all CSS inline in a `<style>` block, no external dependencies except Google Fonts). The file contains these seven sections, rendered as a polished, scrollable single-page document:
 
 **Section 1: PROJECT BRIEF** — The original task, any clarifying questions asked and answers received, and confirmed assumptions.
 
-**Section 2: ARCHITECTURE** — A text diagram showing how agents connect, what flows between them, and the stage structure.
+**Section 2: ARCHITECTURE** — A visual diagram showing how agents connect, what flows between them, and the stage structure.
 
 **Section 3: AGENT REGISTRY** — Full detail for every selected agent: name, stage, status, input, output, skills, justification, and what it blocks.
 
@@ -182,6 +182,84 @@ After showing all terminal output, I instruct Claude Code to save a file called 
 
 **Section 7: RISK FLAGS** — Any missing context, ambiguities, assumptions made, scope gaps, or handoff risks that could cause problems during execution.
 
+#### HTML DESIGN SPECIFICATION
+
+The HTML file must use the Orqestra design system. Follow this specification exactly:
+
+**Fonts** (loaded from Google Fonts):
+- `Fraunces` (variable, ital, opsz 9-144, weights 200/400/600) — used for headings, large numbers, and the logo
+- `Plus Jakarta Sans` (weights 300/400/500/600) — used for body text, labels, descriptions
+- `JetBrains Mono` (weights 300/400) — used for monospace elements: agent names, stage labels, code, paths, metadata
+
+**Color palette** (CSS custom properties on `:root`):
+```css
+--pink: #CF2C91;
+--pink-light: #FAE8F3;
+--pink-mid: #E87ABE;
+--blue: #1F80FF;
+--blue-light: #E8F2FF;
+--blue-mid: #7AB8FF;
+--orange: #F58220;
+--orange-light: #FEF1E6;
+--orange-mid: #FAB47A;
+--green: #4AA147;
+--green-light: #EBF6EB;
+--green-mid: #8FCA8D;
+--black: #000000;
+--gray-100: #F6F6F6;
+--gray-200: #EBEBEB;
+--gray-300: #D4D4D4;
+--gray-500: #7A7A7A;
+--gray-700: #3A3A3A;
+--white: #FFFFFF;
+```
+
+**Layout structure:**
+1. **Fixed header** — white background with `backdrop-filter: blur(8px)`, bottom border `var(--gray-200)`. Left: logo "Orq*estra*" (Fraunces, italic span in pink). Right: project name in JetBrains Mono.
+2. **Hero section** — full-width, split layout or centered. Project name in Fraunces (font-weight 200, large clamp size). Subtitle/description in Plus Jakarta Sans weight 300. Stats row (agent count, skill count, stage count) with colored numbers (pink, blue, green).
+3. **Sections** — alternate between `var(--white)` and `var(--gray-100)` backgrounds. Each section has:
+   - A colored label (JetBrains Mono, 11px, uppercase, letter-spacing .18em) with a 24px colored line before it
+   - A large heading (Fraunces, weight 200, ~36-52px clamp)
+   - Content in cards or tables with `border-radius: 14px`, `border: 1.5px solid var(--gray-200)`, hover lift effect
+
+**Component patterns:**
+- **Agent cards** — white background, rounded corners, colored dot indicator (pink/blue/orange/green based on stage), card number in Fraunces (large, gray-200 color), title in 15px weight 600, description in 14px weight 300
+- **Assembly table** — dark background (`var(--black)`), monospace text. Stage numbers, agent names, status badges with colored backgrounds: `foundation` = green tint, `parallel` = pink tint, `dependent` = blue tint, `final gate` = orange tint
+- **Section tags** — JetBrains Mono 10px, uppercase, letter-spacing .08em, pill-shaped with colored background tints matching the Orqestra palette
+- **Risk flags** — orange-tinted cards with left border accent
+
+**Interactions (CSS only, no JS required):**
+- Cards hover: `transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,.07); border-color: var(--pink)`
+- Smooth scroll behavior on `html`
+- Print-friendly: `@media print` hides the fixed header and removes hover effects
+
+**Document structure:**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orqestra Plan — {PROJECT_NAME}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,600;1,9..144,200;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>/* Full CSS here using the design tokens above */</style>
+</head>
+<body>
+  <!-- Fixed header with logo and project name -->
+  <!-- Hero section with project brief, stats -->
+  <!-- Section: Architecture (visual flow diagram using CSS grid/flex) -->
+  <!-- Section: Agent Registry (cards grid) -->
+  <!-- Section: Assembly Table (dark terminal-style table) -->
+  <!-- Section: Skill Map (colored tags grouped by stage) -->
+  <!-- Section: Execution Sequence (numbered checklist) -->
+  <!-- Section: Handoff Contracts (connected cards) -->
+  <!-- Section: Risk Flags (orange-accented cards) -->
+</body>
+</html>
+```
+
+Every plan output must be a complete, valid, self-contained HTML file that looks polished when opened in any browser. No placeholder content — every section must be fully populated with the actual plan data.
+
 ---
 
 ### STEP 6 — CONFIRMATION GATE
@@ -190,7 +268,7 @@ After saving the file, I print exactly this and stop:
 
 ```
 ─────────────────────────────────────────────
-  Plan saved to ORQESTRA_PLAN.md
+  Plan saved to ORQESTRA_PLAN.html
 
   Review the plan above.
   Type YES to begin execution.
@@ -202,7 +280,7 @@ After saving the file, I print exactly this and stop:
 I do nothing further until the user responds.
 
 - If the user types **YES** — I invoke the first stage agent by name.
-- If the user types **REVISE** followed by their change — I update the plan, re-save `ORQESTRA_PLAN.md`, and show the confirmation gate again.
+- If the user types **REVISE** followed by their change — I update the plan, re-save `ORQESTRA_PLAN.html`, and show the confirmation gate again.
 - If the user types **NO** — I stop completely.
 
 ---
@@ -289,13 +367,13 @@ STAGE 2   api-security / event-driven-architecture / data-pipeline-design / desi
 STAGE 3   (agent domain knowledge)
 ```
 
-**STEP 5:** File `ORQESTRA_PLAN.md` is saved to the project root with all seven sections.
+**STEP 5:** File `ORQESTRA_PLAN.html` is saved to the project root with all seven sections, rendered as a polished HTML document using the Orqestra design system.
 
 **STEP 6 output:**
 
 ```
 ─────────────────────────────────────────────
-  Plan saved to ORQESTRA_PLAN.md
+  Plan saved to ORQESTRA_PLAN.html
 
   Review the plan above.
   Type YES to begin execution.
