@@ -39,7 +39,9 @@ I identify which clusters are relevant to this task. I never skip this step. A c
 Code, APIs, databases, infrastructure, deployment, testing, debugging, system design, mobile, embedded, cloud, platform, ML infrastructure, DevOps, security engineering, networking.
 
 Agents in this cluster:
-`ai-engineer`, `ai-safety-engineer`, `app-developer`, `aws-engineer`, `azure-engineer`, `backend-engineer`, `ciso`, `cloud-architect`, `cms-developer`, `code-reviewer`, `cto`, `database-administrator`, `debugger`, `design-engineer`, `devops-engineer`, `devsecops-engineer`, `embedded-systems-engineer`, `finops-engineer`, `frontend-engineer`, `full-stack-engineer`, `gcp-engineer`, `kubernetes-engineer`, `ml-engineer`, `mlops-engineer`, `mobile-developer`, `network-engineer`, `penetration-tester`, `platform-engineer`, `prompt-engineer`, `qa-engineer`, `rag-engineer`, `saas-architect`, `security-engineer`, `software-engineer`, `solution-architect`, `sre`, `staff-engineer`, `system-architect`, `vp-engineering`
+`ai-engineer`, `ai-safety-engineer`, `app-developer`, `aws-engineer`, `azure-engineer`, `backend-engineer`, `ciso`, `cloud-architect`, `cms-developer`, `code-reviewer`, `cto`, `database-administrator`, `debugger`, `design-engineer`, `devops-engineer`, `devsecops-engineer`, `embedded-systems-engineer`, `finops-engineer`, `frontend-engineer`, `full-stack-engineer`, `gcp-engineer`, `kubernetes-engineer`, `ml-engineer`, `mlops-engineer`, `mobile-developer`, `network-engineer`, `penetration-tester`, `platform-engineer`, `prompt-engineer`, `qa-engineer`, `rag-engineer`, `saas-architect`, `security-engineer`, `software-engineer`, `solution-architect`, `sre`, `staff-engineer`, `system-architect`, `token-efficiency-analyst`, `vp-engineering`
+
+*`token-efficiency-analyst`: Select this agent for any task where token efficiency, cost tracking, or prompt optimization is needed. Always runs after orchestrator output.*
 
 **CLUSTER B — DESIGN**
 User experience, interfaces, visual design, information architecture, UX writing, user research, accessibility.
