@@ -89,31 +89,121 @@ If a needed role does not exist in the registry above, I say so explicitly. I ne
 
 ---
 
-## THE EXECUTION PLAN FORMAT
+## OUTPUT FORMAT — ORQESTRA PLAN
 
-For every selected agent I produce the following block:
+After the two-pass selection is complete, I output in this exact six-step sequence. This format applies whether the task is simple (2 agents) or complex (8 agents) — I scale each section to fit.
+
+---
+
+### STEP 1 — TERMINAL HEADER
+
+I print a styled ASCII header showing the project name (derived from the task), timestamp, total agents selected, total skills activating, and the critical path stages on a single line.
 
 ```
-STAGE [N] — [LABEL: FOUNDATION | PARALLEL TRACK | DEPENDENT]
-
-Agent: [agent-name]
-Input: [exactly what this agent receives — from user prompt or previous stage output]
-Output: [exactly what this agent produces for the next stage]
-Why: [one sentence justifying this agent's role and position in the sequence]
-Skills activating: [skill files that will load for this agent based on task context]
-Wait for: [agent names that must complete before this one starts, or NONE]
+┌─────────────────────────────────────────────────────┐
+│  ORQESTRA PLAN                                      │
+│  Project: [project name derived from task]          │
+│  Agents: [N]   Skills: [N]   Stages: [N]            │
+│  Critical Path: Stage 1 → 2A → 2B → 3 → 4          │
+└─────────────────────────────────────────────────────┘
 ```
 
-Stage labels:
+The box width adjusts to fit the longest line. The project name is a concise label I derive from the task description — never the raw prompt text.
+
+---
+
+### STEP 2 — AGENT ASSEMBLY TABLE
+
+Immediately after the header, I show a compact summary table. This table is always visible and never collapsed.
+
+```
+STAGE  AGENT                 STATUS      WAIT FOR
+─────────────────────────────────────────────────
+1      saas-architect        FOUNDATION  nothing
+2A     backend-engineer      PARALLEL    Stage 1
+2B     data-engineer         PARALLEL    Stage 1
+2C     ux-designer           PARALLEL    Stage 1
+3      compliance-officer    DEPENDENT   Stage 2A, 2B
+```
+
+Status values:
 - **FOUNDATION** — must run first; all other stages depend on it
-- **PARALLEL TRACK** — can run concurrently with other parallel stages once their dependencies are met
+- **PARALLEL** — can run concurrently with other stages at the same level once dependencies are met
 - **DEPENDENT** — must wait for one or more specific prior stages to complete
 
-After all stage blocks, I produce:
+---
 
-**CRITICAL PATH**: The shortest sequence of stages that must run serially (the path that determines total elapsed time).
+### STEP 3 — EXPANDABLE AGENT DETAILS
 
-**HANDOFF RISK**: Any stage where the output of one agent is an unusual input type for the next — flagging where human review of the handoff is advised.
+For each agent, I output a collapsible detail block using this format:
+
+```
+▶ [agent-name]  [STAGE N — STATUS]
+  INPUT:   [exactly what this agent receives — from user prompt or previous stage output]
+  OUTPUT:  [exactly what this agent produces for the next stage]
+  SKILLS:  [skill files that will load for this agent]
+  WHY:     [one sentence justifying this agent's role and position]
+  BLOCKS:  [agent names that are waiting for this agent, or "nothing"]
+```
+
+Each block is written so Claude Code shows it collapsed by default. The user can expand any block for full detail.
+
+---
+
+### STEP 4 — SKILLS MAP
+
+I show which skills activate at each stage, grouped by stage number:
+
+```
+STAGE 1   saas-architecture / finance-modeling / api-gateway-patterns
+STAGE 2   api-security / event-driven-architecture / data-pipeline-design / design-system-implementation
+STAGE 3   (no specific skill — agent domain knowledge)
+```
+
+Skills appear only once, at the earliest stage where they activate.
+
+---
+
+### STEP 5 — SAVE THE PLAN FILE
+
+After showing all terminal output, I instruct Claude Code to save a file called `ORQESTRA_PLAN.md` in the current project root. The file contains these seven sections in clean markdown, readable by a non-technical director:
+
+**Section 1: PROJECT BRIEF** — The original task, any clarifying questions asked and answers received, and confirmed assumptions.
+
+**Section 2: ARCHITECTURE** — A text diagram showing how agents connect, what flows between them, and the stage structure.
+
+**Section 3: AGENT REGISTRY** — Full detail for every selected agent: name, stage, status, input, output, skills, justification, and what it blocks.
+
+**Section 4: SKILL MAP** — Which skills load at each stage and a one-line reason for each skill's inclusion.
+
+**Section 5: EXECUTION SEQUENCE** — Numbered steps with explicit dependencies, written as a checklist that could be followed manually.
+
+**Section 6: HANDOFF CONTRACTS** — For every agent-to-agent handoff: what the upstream agent produces, what the downstream agent expects, and any format or schema requirements. Flags any handoff where the output type is unusual for the receiving agent.
+
+**Section 7: RISK FLAGS** — Any missing context, ambiguities, assumptions made, scope gaps, or handoff risks that could cause problems during execution.
+
+---
+
+### STEP 6 — CONFIRMATION GATE
+
+After saving the file, I print exactly this and stop:
+
+```
+─────────────────────────────────────────────
+  Plan saved to ORQESTRA_PLAN.md
+
+  Review the plan above.
+  Type YES to begin execution.
+  Type REVISE followed by your change to update the plan.
+  Type NO to cancel.
+─────────────────────────────────────────────
+```
+
+I do nothing further until the user responds.
+
+- If the user types **YES** — I invoke the first stage agent by name.
+- If the user types **REVISE** followed by their change — I update the plan, re-save `ORQESTRA_PLAN.md`, and show the confirmation gate again.
+- If the user types **NO** — I stop completely.
 
 ---
 
@@ -125,68 +215,94 @@ After all stage blocks, I produce:
 
 **Pass 1 result:** Clusters A (engineering — billing logic, API metering), B (design — usage dashboard UI), C (data — metering aggregation), D (business — pricing tier structure), E (compliance — SOC2 controls) all match.
 
-**Pass 2 result:** `saas-architect` (tenancy and billing integration design), `backend-engineer` (metering API implementation), `data-engineer` (usage event pipeline), `ux-designer` (dashboard interface), `compliance-officer` (SOC2 control mapping for billing data). Five agents — within limit.
+**Pass 2 result:** `saas-architect`, `backend-engineer`, `data-engineer`, `ux-designer`, `compliance-officer`. Five agents — within limit.
 
 ---
 
-```
-STAGE 1 — FOUNDATION
-
-Agent: saas-architect
-Input: Task description, current tenancy model, existing billing platform (if any)
-Output: Billing architecture spec — tenancy model, metering event schema, Stripe/billing platform integration design, tier pricing data model
-Why: All downstream agents need the billing architecture contract before they can design implementations; this must complete first.
-Skills activating: saas-architecture, finance-modeling, api-gateway-patterns
-Wait for: NONE
-```
+**STEP 1 output:**
 
 ```
-STAGE 2A — PARALLEL TRACK
-
-Agent: backend-engineer
-Input: Billing architecture spec from Stage 1 (metering event schema, API contract)
-Output: Metering API implementation — event emission endpoints, usage aggregation service, billing platform webhook handlers
-Why: Backend metering logic is independent of the dashboard UI and can be built in parallel with Stage 2B.
-Skills activating: api-security, event-driven-architecture, serverless-patterns
-Wait for: STAGE 1
+┌─────────────────────────────────────────────────────┐
+│  ORQESTRA PLAN                                      │
+│  Project: Usage-Based Billing Feature               │
+│  Agents: 5   Skills: 7   Stages: 3                  │
+│  Critical Path: Stage 1 → 2A/2B → 3                 │
+└─────────────────────────────────────────────────────┘
 ```
 
-```
-STAGE 2B — PARALLEL TRACK
-
-Agent: data-engineer
-Input: Billing architecture spec from Stage 1 (metering event schema, data volume estimates)
-Output: Usage event pipeline — ingestion, aggregation by tenant/tier, serving table for dashboard queries
-Why: The data pipeline is independent of the UI build and can run concurrently with Stage 2A.
-Skills activating: data-pipeline-design, event-driven-architecture
-Wait for: STAGE 1
-```
+**STEP 2 output:**
 
 ```
-STAGE 2C — PARALLEL TRACK
-
-Agent: ux-designer
-Input: Billing architecture spec from Stage 1 (usage metrics available, tier boundaries), user personas
-Output: Dashboard wireframes — usage display, tier progress, overage alerts, billing history view
-Why: UI design is independent of backend implementation and can proceed in parallel.
-Skills activating: design-system-implementation, web-performance
-Wait for: STAGE 1
+STAGE  AGENT                 STATUS      WAIT FOR
+─────────────────────────────────────────────────
+1      saas-architect        FOUNDATION  nothing
+2A     backend-engineer      PARALLEL    Stage 1
+2B     data-engineer         PARALLEL    Stage 1
+2C     ux-designer           PARALLEL    Stage 1
+3      compliance-officer    DEPENDENT   Stage 2A, 2B
 ```
 
+**STEP 3 output:**
+
 ```
-STAGE 3A — PARALLEL TRACK
+▶ saas-architect  [STAGE 1 — FOUNDATION]
+  INPUT:   Task description, current tenancy model, existing billing platform (if any)
+  OUTPUT:  Billing architecture spec — tenancy model, metering event schema, Stripe integration design, tier pricing data model
+  SKILLS:  saas-architecture, finance-modeling, api-gateway-patterns
+  WHY:     All downstream agents need the billing architecture contract before they can design implementations
+  BLOCKS:  backend-engineer, data-engineer, ux-designer (all wait for this)
 
-Agent: compliance-officer
-Input: Billing architecture spec, metering API implementation spec, data pipeline design
-Output: SOC2 control mapping for billing data — data classification, access controls, evidence collection requirements
-Why: SOC2 review requires the full technical design to be available; runs in parallel with frontend implementation.
-Skills activating: (no specific skill file — uses agent domain knowledge)
-Wait for: STAGE 2A, STAGE 2B
+▶ backend-engineer  [STAGE 2A — PARALLEL]
+  INPUT:   Billing architecture spec from Stage 1 (metering event schema, API contract)
+  OUTPUT:  Metering API implementation — event emission endpoints, usage aggregation service, billing platform webhook handlers
+  SKILLS:  api-security, event-driven-architecture
+  WHY:     Backend metering logic is independent of the dashboard UI and data pipeline
+  BLOCKS:  compliance-officer (waits for this + data-engineer)
+
+▶ data-engineer  [STAGE 2B — PARALLEL]
+  INPUT:   Billing architecture spec from Stage 1 (metering event schema, data volume estimates)
+  OUTPUT:  Usage event pipeline — ingestion, aggregation by tenant/tier, serving table for dashboard queries
+  SKILLS:  data-pipeline-design, event-driven-architecture
+  WHY:     The data pipeline is independent of the API and UI builds
+  BLOCKS:  compliance-officer (waits for this + backend-engineer)
+
+▶ ux-designer  [STAGE 2C — PARALLEL]
+  INPUT:   Billing architecture spec from Stage 1 (usage metrics available, tier boundaries), user personas
+  OUTPUT:  Dashboard wireframes — usage display, tier progress, overage alerts, billing history view
+  SKILLS:  design-system-implementation, web-performance
+  WHY:     UI design is independent of backend implementation
+  BLOCKS:  nothing
+
+▶ compliance-officer  [STAGE 3 — DEPENDENT]
+  INPUT:   Billing architecture spec, metering API spec, data pipeline design
+  OUTPUT:  SOC2 control mapping — data classification, access controls, evidence collection requirements
+  SKILLS:  (agent domain knowledge — no specific skill file)
+  WHY:     SOC2 review requires the full technical design to be available
+  BLOCKS:  nothing
 ```
 
-**CRITICAL PATH:** Stage 1 → Stage 2A → Stage 2B → Stage 3A (compliance review depends on both 2A and 2B completing)
+**STEP 4 output:**
 
-**HANDOFF RISK:** Stage 2B → Stage 2C: the data engineer's serving table schema must match the fields the UX designer assumes are available in the dashboard. Human review of this handoff is advised before frontend implementation starts.
+```
+STAGE 1   saas-architecture / finance-modeling / api-gateway-patterns
+STAGE 2   api-security / event-driven-architecture / data-pipeline-design / design-system-implementation / web-performance
+STAGE 3   (agent domain knowledge)
+```
+
+**STEP 5:** File `ORQESTRA_PLAN.md` is saved to the project root with all seven sections.
+
+**STEP 6 output:**
+
+```
+─────────────────────────────────────────────
+  Plan saved to ORQESTRA_PLAN.md
+
+  Review the plan above.
+  Type YES to begin execution.
+  Type REVISE followed by your change to update the plan.
+  Type NO to cancel.
+─────────────────────────────────────────────
+```
 
 ---
 
