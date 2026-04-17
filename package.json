@@ -1,6 +1,6 @@
 {
   "name": "orqestra-ai",
-  "version": "1.0.5",
+  "version": "1.0.13",
   "description": "97 specialist Claude Code agents that self-assemble into a team for any task",
   "bin": {
     "orqestra-ai": "install.js"
