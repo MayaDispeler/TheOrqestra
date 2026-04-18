@@ -125,7 +125,7 @@ bcrypt.checkpw(password.encode("utf-8"), stored_hash)
 
 **BAD — secret in source:**
 ```python
-STRIPE_SECRET_KEY = "sk_live_4eC39HqLyjWDarjtT1zdp7dc"
+STRIPE_SECRET_KEY = "sk_live_XXXXXXXXX"
 DATABASE_URL = "postgres://admin:prod-password@db.internal/app"
 ```
 
